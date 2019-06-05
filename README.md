@@ -8,6 +8,81 @@
     <a title="About">About Page</a>
 </Link>
 ```
+## 动态路由
+1. 子路由跳转
+```
+// index.js
+// 子路由跳转
+const PostLink = props => (
+  <li>
+    <Link href={`/post?title=${props.title}`}>
+      <a>{props.title}</a>
+    </Link>
+  </li>
+);
+----------------
+// post.js
+// 获取路由参数, props.router.query
+// withRouter -> 向 props 注入 router 对象
+import { withRouter } from 'next/router';
+import Layout from '../components/MyLayout.js';
+
+const Page = withRouter(props => (
+  <Layout>
+    <h1>{props.router.query.title}</h1>
+    <p>This is the blog post content.</p>
+  </Layout>
+));
+
+export default Page;
+```
+2. as属性改变URL显式方式
+```
+const PostLink = props => (
+  <li>
+    <Link as={`/p/${props.id}`} href={`/post?title=${props.title}`}>
+      <a>{props.title}</a>
+    </Link>
+  </li>
+);
+```
+3. 子路由刷新问题
+后端 node.js 解决
+```
+// server.js
+const express = require('express');
+const next = require('next');
+
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
+
+app
+  .prepare()
+  .then(() => {
+    const server = express();
+
+    // 当刷新访问该URL的时候，渲染子路由
+    server.get('/p/:id', (req, res) => {
+      const actualPage = '/post';
+      const queryParams = { title: req.params.id };
+      app.render(req, res, actualPage, queryParams);
+    });
+
+    server.get('*', (req, res) => {
+      return handle(req, res);
+    });
+
+    server.listen(3000, err => {
+      if (err) throw err;
+      console.log('> Ready on http://localhost:3000');
+    });
+  })
+  .catch(ex => {
+    console.error(ex.stack);
+    process.exit(1);
+  });
+```
 ## 共享组件
 1. props.children
 ```
@@ -62,3 +137,4 @@ const Index = () => (
     <Layout content={page} />
 )
 ```
+
