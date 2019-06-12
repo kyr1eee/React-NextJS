@@ -137,4 +137,35 @@ const Index = () => (
     <Layout content={page} />
 )
 ```
+## 请求数据
 
+```
+// index.js
+// 服务器请求数据
+// 服务器渲染,因此服务器请求数据,无须客户端请求
+Index.getInitialProps = async function() {
+  const res = await fetch('https://api.tvmaze.com/search/shows?q=batman');
+  const data = await res.json();
+
+  console.log(`Show data fetched. Count: ${data.length}`);
+
+  return {
+    shows: data.map(entry => entry.show)
+  };
+};
+------------
+
+// post.js
+// 客户端请求数据
+// 因为通过客户端请求路由,因此通过客户端请求
+Post.getInitialProps = async function(context) {
+  // context.query 获取查询参数
+  const { id } = context.query;
+  const res = await fetch(`https://api.tvmaze.com/shows/${id}`);
+  const show = await res.json();
+
+  console.log(`Fetched show: ${show.name}`);
+
+  return { show };
+};
+```
