@@ -1,4 +1,11 @@
 # React-NextJS
+Next.js是一个流行的轻量级框架，用于使用React构建的静态和服务器呈现的应用程序。它还提供样式和路由解决方案。
+- 默认情况下，服务器呈现
+- 自动代码拆分，加快页面加载速度
+- 简单的客户端路由（基于页面）
+- 支持基于Webpack的开发环境（HMR）
+- 能够使用Express或任何其他Node.js HTTP服务器实现
+- 可以使用您自己的Babel和Webpack配置进行定制
 ## 路由
 - client-side navigation 路由导航,无须通过请求服务器来跳转
 - Link 为高阶组件
