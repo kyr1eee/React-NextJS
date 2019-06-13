@@ -169,3 +169,39 @@ Post.getInitialProps = async function(context) {
   return { show };
 };
 ```
+## styled-jsx 样式
+- css in js, 每个 styled-jsx 组件都是单独的作用域, 不会影响其他组件, 同时对嵌套组件的元素也无效
+- styled-jsx 通过 babel插件运行,它将解析所有CSS并在构建过程中应用
+- 使用styled-jsx，所有必需的前缀和CSS验证都在babel插件中完成，因此没有额外的运行时开销
+```
+<style jsx>{`
+  a {
+    color: #fff;
+  }
+
+  h1 {
+    background: #000;
+  }
+
+  a:hover {
+    cursor: pointer;
+  }
+
+`}</style>
+```
+- 改变子组件内部样式, 通过global全局样式
+```
+<style jsx global>{`
+  .markdown {
+    ...
+  }
+
+  .markdown a {
+    ...
+  }
+
+  .markdown h3 {
+    ...
+  }
+`}</style>
+```
