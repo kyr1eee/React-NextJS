@@ -137,8 +137,36 @@ const Index = () => (
     <Layout content={page} />
 )
 ```
-## 请求数据
+## 请求数据 getInitialProps
+- 页面加载的过程中异步抓取数据
+- 返回值必须为纯对象
+- 只可在pages目录下文件使用,不能在components使用
+- 服务器渲染期间,返回值序列化,类似JSON.stringify
+```
+// pathname - URL路径
+// query - URL查询对象
+// asPath - 浏览器显示的实际路径(包括query参数)的字符串
+// req - HTTP request object (server only)
+// res - HTTP response object (server only)
+// err - Error object if any error is encountered during the rendering
+import React from 'react';
+class Index extends React.Component {
+    static async getInitialProps({ req, res, err, query, pathname, asPath}) {
+        const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
+        console.log({ req, res, err, query, pathname, asPath});
+        return { userAgent };
+    }
 
+    render() {
+        return (
+            <div>
+                Hello World
+            </div>
+        )
+    }
+} 
+export default Index;
+```
 ```
 // index.js
 // 服务器请求数据
@@ -204,4 +232,24 @@ Post.getInitialProps = async function(context) {
     ...
   }
 `}</style>
+```
+## 静态文件服务
+- static目录存储,通过/static/filename获取
+- public目录存储,通过根目录获取,即/filename(当前版本貌似已取消)
+
+## 内置Head组件
+- head元素不能位于div内,因此需要内置Head组件
+```
+import Head from 'next/head';
+const index = () => (
+    <div>
+        <Head>
+            <meta name="viewport"
+                  content="initial-scale=1.0, width=device-width"
+                  key="viewport"></meta>
+            <title>内置Head组件</title>
+        </Head>
+    </div>
+)
+export default index;
 ```
