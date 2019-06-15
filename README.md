@@ -205,9 +205,20 @@ Router.events.off('routeChangeStart', handleRouteChange);
 ```
 // Success
 // Current URL is "/"
-const href = '/?counter=10';
-const as = '/';
-Router.push(href, as, { shallow: true });
+function A({...}) {
+  ...
+  const href = '/?counter=10';
+  const as = '/';
+  Router.push(href, as, { shallow: true });
+  ...
+  return (
+    <div>
+      { router.query.counter }
+    </div>
+  )
+}
+export default withRouter(A)
+
 
 // Failed
 const href = '/?counter=10';
