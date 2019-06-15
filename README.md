@@ -44,7 +44,8 @@ import Router from 'next/router';
 })}>
 ```
 2. 获取路由参数,withRouter 和 getInitialProps  
-withRouter 高阶组件
+withRouter 高阶组件  
+withRouter注入的router对象与来自'next/router'的Router相似
 ```
 // post.js
 // withRouter获取路由参数, props.router.query
