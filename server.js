@@ -16,6 +16,11 @@ app
       app.render(req, res, actualPage, queryParams);
     });
 
+    server.get('/router/test/:q', (req, res) => {
+      console.log('Get /router/test:q', req.params);
+      app.render(req, res, '/router/test', { q: req.params.id });
+    });
+
     server.get('*', (req, res) => {
       return handle(req, res);
     });

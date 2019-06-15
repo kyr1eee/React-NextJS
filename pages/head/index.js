@@ -1,4 +1,5 @@
 import Head from 'next/head';
+// head元素不能位于div内,因此需要内置Head组件
 const index = () => (
     <div>
         <Head>

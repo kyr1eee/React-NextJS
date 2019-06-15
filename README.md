@@ -27,9 +27,11 @@ const PostLink = props => (
     </Link>
   </li>
 );
-----------------
+```
+2. 获取路由参数,withRouter 和 getInitialProps
+```
 // post.js
-// 获取路由参数, props.router.query
+// withRouter获取路由参数, props.router.query
 // withRouter -> 向 props 注入 router 对象
 import { withRouter } from 'next/router';
 import Layout from '../components/MyLayout.js';
@@ -43,7 +45,25 @@ const Page = withRouter(props => (
 
 export default Page;
 ```
-2. as属性改变URL显式方式
+```
+import React from 'react';
+class Test extends React.Component {
+    static async getInitialProps({ query }) {
+        const { q } = query;
+        return { q };
+    }
+
+    render() {
+        return (
+            <div>
+                This is { this.props.q } page
+            </div>
+        )
+    }
+}
+export default Test;
+```
+3. as属性改变URL显式方式
 ```
 const PostLink = props => (
   <li>
@@ -53,9 +73,13 @@ const PostLink = props => (
   </li>
 );
 ```
-3. 子路由刷新问题
-后端 node.js 解决
+4. 子路由刷新问题  
+如果Link标签使用了as属性,刷新的时候将出错,此时后端 node.js 解决
 ```
+// index.js
+<Link as={`/p/${props.id}`} href={`/post?title=${props.title}`}>
+  <a>{props.title}</a>
+</Link>
 // server.js
 const express = require('express');
 const next = require('next');
@@ -70,6 +94,7 @@ app
     const server = express();
 
     // 当刷新访问该URL的时候，渲染子路由
+    // 子路由只能获取as属性的参数,无法获取title,此时无法显示title内容
     server.get('/p/:id', (req, res) => {
       const actualPage = '/post';
       const queryParams = { title: req.params.id };
@@ -89,6 +114,24 @@ app
     console.error(ex.stack);
     process.exit(1);
   });
+```
+5. replace属性  
+replace作用是替换浏览器历史堆栈中栈顶的URL,Link组件默认行为是入栈
+```
+const OtherLink = ({data}) => (
+  <div>
+      {/* replace作用是替换浏览器历史堆栈中栈顶的URL,Link组件默认行为是入栈 */}
+      <Link href={`/router/other?title=${data.name}`} replace>
+          <a>Other Link to { data.name } Page</a>
+      </Link>
+  </div>
+);
+```
+6. Link组件href属性可用对象赋值
+```
+<Link href={{ pathname: '/about', query: { name: 'Zeit' } }}>
+  <a>here</a>
+</Link>
 ```
 ## 共享组件
 1. props.children
