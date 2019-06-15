@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Router from 'next/router';
+import React from 'react';
 const data = [
     {
         id: 10086,
@@ -9,6 +11,16 @@ const data = [
         name: "Girl"
     }
 ];
+
+// 报错：只能在客户端使用
+// Router.beforePopState(({ url, as, options }) => {
+//     if(url !== '/') {
+//         window.location.href = as;
+//         alert('不是主页');
+//         return false;
+//     }
+//     return true;
+// });
 
 const TestLink = ({data}) => (
     <div>
@@ -29,6 +41,21 @@ const OtherLink = ({data}) => (
 );
 const Index = () => (
     <div>
+        <Link as="/head/666" href="/head">
+            <a>
+                拦截popstate测试
+            </a>
+        </Link>
+        <button onClick={() => Router.push('/css')}>路由跳转</button>
+        <button onClick={() => Router.push({
+            pathname: '/router/other',
+            query: { title: 'sleepyyyyyyyyyy' }
+        })}>
+            路由传参跳转
+        </button>
+        <Link href="/">
+            <img src="static/jojo.png" />
+        </Link>
         { data.map(item => (
             <TestLink key={item.id} data={item} />
         )) }

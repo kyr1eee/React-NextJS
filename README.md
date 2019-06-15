@@ -16,10 +16,11 @@ Next.js是一个流行的轻量级框架，用于使用React构建的静态和�
 </Link>
 ```
 ## 动态路由
-1. 子路由跳转
+1. 子路由跳转,Link 和 Router
 ```
 // index.js
 // 子路由跳转
+import Link from 'next/link';
 const PostLink = props => (
   <li>
     <Link href={`/post?title=${props.title}`}>
@@ -28,7 +29,19 @@ const PostLink = props => (
   </li>
 );
 ```
+```
+import Router from 'next/router';
+<button onClick={() => Router.push('/css')}>路由跳转</button>
+```
+- 传参跳转
+```
+<button onClick={() => Router.push({
+    pathname: '/router/other',
+    query: { title: 'sleepyyyyyyyyyy' }
+})}>
+```
 2. 获取路由参数,withRouter 和 getInitialProps
+- withRouter 高阶组件
 ```
 // post.js
 // withRouter获取路由参数, props.router.query
@@ -44,6 +57,30 @@ const Page = withRouter(props => (
 ));
 
 export default Page;
+
+-----------------------------------
+// 高阶组件
+import { withRouter } from 'next/router'
+// 注入router对象
+const ActiveLink = ({ children, router, href }) => {
+  const style = {
+    marginRight: 10,
+    // 判断当前url是否为该路由组件
+    color: router.pathname === href ? 'red' : 'black'
+  }
+
+  const handleClick = e => {
+    e.preventDefault()
+    router.push(href)
+  }
+
+  return (
+    <a href={href} onClick={handleClick} style={style}>
+      {children}
+    </a>
+  )
+}
+export default withRouter(ActiveLink)
 ```
 ```
 import React from 'react';
@@ -133,6 +170,50 @@ const OtherLink = ({data}) => (
   <a>here</a>
 </Link>
 ```
+7. 拦截popstate事件, Router.beforePopState
+popstate: 浏览器历史堆栈发生改变时触发的事件
+beforePopState: 返回false将不处理popstate事件。返回true处理popstate事件
+```
+Router.beforePopState(({ url, as, options }) => {
+    if(url !== '/') {
+        window.location.href = as;
+        alert('不是主页');
+        return false;
+    }
+    return true;
+});
+```
+8. 路由事件, Router.events
+- routeChangeStart(url) - Fires when a route starts to change
+- routeChangeComplete(url) - Fires when a route changed completely
+- routeChangeError(err, url) - Fires when there's an error when changing routes
+- beforeHistoryChange(url) - Fires just before changing the browser's history
+- hashChangeStart(url) - Fires when the hash will change but not the page
+- hashChangeComplete(url) - Fires when the hash has changed but not the page
+```
+const handleRouteChange = url => {
+  console.log('App is changing to: ', url);
+};
+// 监听
+Router.events.on('routeChangeStart', handleRouteChange);
+// 取消监听
+Router.events.off('routeChangeStart', handleRouteChange);
+```
+9. 浅路由 shallow routing
+- 跳转路由时不触发getInitialProps, 通过withRouter获取路由对象
+- 相同页面URL改变才能使用,当跳转到新的页面,原先页面会卸载然后新页面触发getInitialProps
+```
+// Success
+// Current URL is "/"
+const href = '/?counter=10';
+const as = '/';
+Router.push(href, as, { shallow: true });
+
+// Failed
+const href = '/?counter=10';
+const as = '/about?counter=10';
+Router.push(href, as, { shallow: true });
+```
 ## 共享组件
 1. props.children
 ```
@@ -210,7 +291,7 @@ class Index extends React.Component {
     render() {
         return (
             <div>
-                Hello World
+                Hello World {this.props.userAgent}
             </div>
         )
     }
