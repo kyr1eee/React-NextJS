@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Router from 'next/router';
+import { withRouter } from 'next/router';
 import React from 'react';
 const data = [
     {
@@ -39,13 +40,19 @@ const OtherLink = ({data}) => (
         </Link>
     </div>
 );
-const Index = () => (
+const Index = ({ router }) => (
     <div>
         <Link as="/head/666" href="/head">
             <a>
                 拦截popstate测试
             </a>
         </Link>
+        <Link href="/router/prefetch" prefetch>
+            <a>预加载页面</a>
+        </Link>
+        {/* router实例只能用于客户端,因此服务端渲染时需要在componentDidMount的生命周期中使用router对象 */}
+        {/* { router.prefetch('/router/prefetch') } */}
+        <button onClick={() => Router.push('/router/prefetch')}>另一种预加载页面</button>
         <button onClick={() => Router.push('/css')}>路由跳转</button>
         <button onClick={() => Router.push({
             pathname: '/router/other',
@@ -65,4 +72,4 @@ const Index = () => (
     </div>
 );
 
-export default Index;
+export default withRouter(Index);

@@ -8,6 +8,7 @@ Next.js是一个流行的轻量级框架，用于使用React构建的静态和�
 - 可以使用您自己的Babel和Webpack配置进行定制
 ## 路由
 - client-side navigation 路由导航,无须通过请求服务器来跳转
+- router实例只能在客户端使用,服务端渲染期间使用将报错
 - Link 为高阶组件
 - Link 的子组件唯一的要求是 onClick 属性可用
 ```
@@ -224,6 +225,49 @@ export default withRouter(A)
 const href = '/?counter=10';
 const as = '/about?counter=10';
 Router.push(href, as, { shallow: true });
+```
+10. 路由页面预加载, prefetch  
+Link标签与router对象
+```
+// 方法1
+<Link href="/router/prefetch" prefetch><a>预加载</a></Link>
+// 方法2
+// router实例只能在客户端使用,因此服务端渲染的时候需要在componentDidMount中使用router实例
+class Index extends React.Component {
+  componentDidMount() {
+    const { router } = this.props;
+    router.prefetch('/router/prefetch')
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={() => Router.push('/router/prefetch')}>另一种预加载页面</button>
+      </div>
+    )
+  }
+}
+export default withRouter(Index);
+```
+11. 禁止文件路径导航
+```
+// next.config.js
+module.export = {
+  useFileSystemPublicRoutes: false
+};
+```
+12. 自定义路由  
+访问a页面,跳转至b页面.访问b页面,跳转至a页面
+```
+// server.js
+const parsedUrl = parse(req.url, true);
+const { pathname, query } = parsedUrl;
+if(pathname === '/a')
+  app.render(req, res, '/b', query);
+else if(pathname === '/b)
+  app.render(req, res, '/a', query);
+else
+  handle(req, res, parsedUrl);
 ```
 ## 共享组件
 1. props.children

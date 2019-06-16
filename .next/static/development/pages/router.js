@@ -9672,6 +9672,7 @@ var _jsxFileName = "E:\\WebFrontEnd\\react-next\\pages\\router\\index.js";
 
 
 
+
 var data = [{
   id: 10086,
   name: "LOL"
@@ -9693,7 +9694,7 @@ var TestLink = function TestLink(_ref) {
   return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 26
+      lineNumber: 27
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_0___default.a, {
@@ -9701,13 +9702,13 @@ var TestLink = function TestLink(_ref) {
     href: "/router/test?q=".concat(data.name),
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 28
+      lineNumber: 29
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("a", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 29
+      lineNumber: 30
     },
     __self: this
   }, "Link to ", data.name, " Page")));
@@ -9718,7 +9719,7 @@ var OtherLink = function OtherLink(_ref2) {
   return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 35
+      lineNumber: 36
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_0___default.a, {
@@ -9726,23 +9727,24 @@ var OtherLink = function OtherLink(_ref2) {
     replace: true,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 37
+      lineNumber: 38
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("a", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 38
+      lineNumber: 39
     },
     __self: this
   }, "Other Link to ", data.name, " Page")));
 };
 
-var Index = function Index() {
+var Index = function Index(_ref3) {
+  var router = _ref3.router;
   return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 43
+      lineNumber: 44
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_0___default.a, {
@@ -9750,22 +9752,45 @@ var Index = function Index() {
     href: "/head",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 44
+      lineNumber: 45
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("a", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 45
+      lineNumber: 46
     },
     __self: this
-  }, "\u62E6\u622Apopstate\u6D4B\u8BD5")), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("button", {
+  }, "\u62E6\u622Apopstate\u6D4B\u8BD5")), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_0___default.a, {
+    href: "/router/prefetch",
+    prefetch: true,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 50
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("a", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 51
+    },
+    __self: this
+  }, "\u9884\u52A0\u8F7D\u9875\u9762")), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("button", {
+    onClick: function onClick() {
+      return next_router__WEBPACK_IMPORTED_MODULE_1___default.a.push('/router/prefetch');
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 55
+    },
+    __self: this
+  }, "\u53E6\u4E00\u79CD\u9884\u52A0\u8F7D\u9875\u9762"), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("button", {
     onClick: function onClick() {
       return next_router__WEBPACK_IMPORTED_MODULE_1___default.a.push('/css');
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 49
+      lineNumber: 56
     },
     __self: this
   }, "\u8DEF\u7531\u8DF3\u8F6C"), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("button", {
@@ -9779,21 +9804,21 @@ var Index = function Index() {
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 50
+      lineNumber: 57
     },
     __self: this
   }, "\u8DEF\u7531\u4F20\u53C2\u8DF3\u8F6C"), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_0___default.a, {
     href: "/",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 56
+      lineNumber: 63
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("img", {
     src: "static/jojo.png",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 57
+      lineNumber: 64
     },
     __self: this
   })), data.map(function (item) {
@@ -9802,7 +9827,7 @@ var Index = function Index() {
       data: item,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 60
+        lineNumber: 67
       },
       __self: this
     });
@@ -9812,14 +9837,14 @@ var Index = function Index() {
       data: item,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 63
+        lineNumber: 70
       },
       __self: this
     });
   }));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Index);
+/* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Index));
 
 /***/ }),
 
