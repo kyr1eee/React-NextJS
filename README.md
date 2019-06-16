@@ -17,6 +17,9 @@ Next.js是一个流行的轻量级框架，用于使用React构建的静态和�
 </Link>
 ```
 ## 动态路由
+- Link
+- Router
+- withRouter
 1. 子路由跳转,Link 和 Router
 ```
 // index.js
@@ -34,15 +37,16 @@ const PostLink = props => (
 import Router from 'next/router';
 <button onClick={() => Router.push('/css')}>路由跳转</button>
 ```
-- 传参跳转
+传参跳转
 ```
 <button onClick={() => Router.push({
     pathname: '/router/other',
     query: { title: 'sleepyyyyyyyyyy' }
 })}>
 ```
-2. 获取路由参数,withRouter 和 getInitialProps
-- withRouter 高阶组件
+2. 获取路由参数,withRouter 和 getInitialProps  
+withRouter 高阶组件  
+withRouter注入的router对象与来自'next/router'的Router相似
 ```
 // post.js
 // withRouter获取路由参数, props.router.query
@@ -111,7 +115,7 @@ const PostLink = props => (
   </li>
 );
 ```
-4. 子路由刷新问题  
+4. 子路由刷新问题
 如果Link标签使用了as属性,刷新的时候将出错,此时后端 node.js 解决
 ```
 // index.js
@@ -171,8 +175,8 @@ const OtherLink = ({data}) => (
   <a>here</a>
 </Link>
 ```
-7. 拦截popstate事件, Router.beforePopState
-popstate: 浏览器历史堆栈发生改变时触发的事件
+7. 拦截popstate事件, Router.beforePopState  
+popstate: 浏览器历史堆栈发生改变时触发的事件  
 beforePopState: 返回false将不处理popstate事件。返回true处理popstate事件
 ```
 Router.beforePopState(({ url, as, options }) => {
@@ -184,13 +188,13 @@ Router.beforePopState(({ url, as, options }) => {
     return true;
 });
 ```
-8. 路由事件, Router.events
-- routeChangeStart(url) - Fires when a route starts to change
-- routeChangeComplete(url) - Fires when a route changed completely
-- routeChangeError(err, url) - Fires when there's an error when changing routes
-- beforeHistoryChange(url) - Fires just before changing the browser's history
-- hashChangeStart(url) - Fires when the hash will change but not the page
-- hashChangeComplete(url) - Fires when the hash has changed but not the page
+8. 路由事件, Router.events  
+routeChangeStart(url) - Fires when a route starts to change  
+routeChangeComplete(url) - Fires when a route changed completely  
+routeChangeError(err, url) - Fires when there's an error when changing routes  
+beforeHistoryChange(url) - Fires just before changing the browser's history  
+hashChangeStart(url) - Fires when the hash will change but not the page  
+hashChangeComplete(url) - Fires when the hash has changed but not the page
 ```
 const handleRouteChange = url => {
   console.log('App is changing to: ', url);
@@ -200,9 +204,9 @@ Router.events.on('routeChangeStart', handleRouteChange);
 // 取消监听
 Router.events.off('routeChangeStart', handleRouteChange);
 ```
-9. 浅路由 shallow routing
-- 跳转路由时不触发getInitialProps, 通过withRouter获取路由对象
-- 相同页面URL改变才能使用,当跳转到新的页面,原先页面会卸载然后新页面触发getInitialProps
+9. 浅路由 shallow routing  
+跳转路由时不触发getInitialProps, 通过withRouter获取路由对象  
+相同页面URL改变才能使用,当跳转到新的页面,原先页面会卸载然后新页面触发getInitialProps
 ```
 // Success
 // Current URL is "/"
