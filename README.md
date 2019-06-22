@@ -582,5 +582,62 @@ export default class MyApp extends App {
   }
 }
 ```
+## 自定义document
+1. next自动定义文档标记,通过pages/_document.js修改
+2. 服务端呈现
+3. 初始服务端时添加标记元素
+4. 自定义renderPage
+```
+// _document is only rendered on the server side and not on the client side
+// Event handlers like onClick can't be added to this file
 
+// ./pages/_document.js
+import Document, { Head, Main, NextScript } from "next/document";
 
+export default class MyDocument extends Document {
+  static async getInitialProps(ctx) {
+    const initialProps = await Document.getInitialProps(ctx);
+    return { ...initialProps };
+  }
+
+  render() {
+    return (
+      <html>
+        <Head>
+          <style>{`body { margin: 0 } /* custom! */`}</style>
+        </Head>
+        <body className="custom_class">
+          <Main />
+          <NextScript />
+        </body>
+      </html>
+    );
+  }
+}
+```
+```
+// 定制“renderPage”的唯一原因是使用css-in-js库，需要将应用程序包装起来以正确使用服务端渲染。 
+import Document from 'next/document'
+
+class MyDocument extends Document {
+  static async getInitialProps(ctx) {
+    const originalRenderPage = ctx.renderPage
+
+    ctx.renderPage = () =>
+      originalRenderPage({
+        // useful for wrapping the whole react tree
+        enhanceApp: App => App,
+        // useful for wrapping in a per-page basis
+        enhanceComponent: Component => Component
+      })
+
+    // Run the parent `getInitialProps` using `ctx` that now includes our custom `renderPage`
+    const initialProps = await Document.getInitialProps(ctx)
+
+    return initialProps
+  }
+}
+
+export default MyDocument
+
+```
