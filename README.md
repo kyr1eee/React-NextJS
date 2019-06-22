@@ -641,3 +641,54 @@ class MyDocument extends Document {
 export default MyDocument
 
 ```
+## 自定义错误处理
+- pages/_error.js
+- 404,500通过默认的error.js处理
+- next/error组件渲染内置错误页面
+
+```
+import React from "react";
+
+export default class Error extends React.Component {
+  static getInitialProps({ res, err }) {
+    const statusCode = res ? res.statusCode : err ? err.statusCode : null;
+    return { statusCode };
+  }
+
+  render() {
+    return (
+      <p>
+        {this.props.statusCode
+          ? `An error ${this.props.statusCode} occurred on server`
+          : "An error occurred on client"}
+      </p>
+    );
+  }
+}
+```
+// 自定义内置错误页面
+import React from "react";
+import Error from "next/error";
+import fetch from "isomorphic-unfetch";
+
+export default class Page extends React.Component {
+  static async getInitialProps() {
+    const res = await fetch("https://api.github.com/repos/zeit/next.js");
+    const statusCode = res.statusCode > 200 ? res.statusCode : false;
+    const json = await res.json();
+
+    return { statusCode, stars: json.stargazers_count };
+  }
+
+  render() {
+    if (this.props.statusCode) {
+      return <Error statusCode={this.props.statusCode} />;
+    }
+
+    return <div>Next stars: {this.props.stars}</div>;
+  }
+}
+
+```
+
+```
