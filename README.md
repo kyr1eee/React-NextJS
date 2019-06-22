@@ -443,3 +443,81 @@ const index = () => (
 )
 export default index;
 ```
+## 动态加载
+服务端动态导入
+1. ssr
+```
+import dynamic from "next/dynamic";
+
+const DynamicComponent = dynamic(import("../components/hello"));
+
+export default () => (
+  <div>
+    <Header />
+    <DynamicComponent />
+    <p>HOME PAGE is here!</p>
+  </div>
+);
+```
+2. 自定义加载组件
+```
+import dynamic from "next/dynamic";
+
+const DynamicComponentWithCustomLoading = dynamic(
+  import("../components/hello2"),
+  {
+    loading: () => <p>...</p>
+  }
+);
+
+export default () => (
+  <div>
+    <Header />
+    <DynamicComponentWithCustomLoading />
+    <p>HOME PAGE is here!</p>
+  </div>
+);
+```
+3. 禁用SSR
+```
+import dynamic from "next/dynamic";
+
+const DynamicComponentWithNoSSR = dynamic(import("../components/hello3"), {
+  ssr: false
+});
+
+export default () => (
+  <div>
+    <Header />
+    <DynamicComponentWithNoSSR />
+    <p>HOME PAGE is here!</p>
+  </div>
+);
+```
+4. 同时加载多个组件
+```
+import dynamic from "next/dynamic";
+
+const HelloBundle = dynamic({
+  modules: () => {
+    const components = {
+      Hello1: import("../components/hello1"),
+      Hello2: import("../components/hello2")
+    };
+
+    return components;
+  },
+  render: (props, { Hello1, Hello2 }) => (
+    <div>
+      <h1>{props.title}</h1>
+      <Hello1 />
+      <Hello2 />
+    </div>
+  )
+});
+
+export default () => <HelloBundle title="Dynamic Bundle" />;
+```
+
+
+
