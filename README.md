@@ -470,10 +470,28 @@ const DynamicComponentWithCustomLoading = dynamic(
   }
 );
 
+const DynamicComponentWithCustomLoading1 = dynamic(
+  {
+    // 待加载组件
+    loader: () => import("../components/hello2"),
+    // 加载组件
+    loading: () => <p>...</p>
+  }
+);
+
+const DynamicComponentWithCustomLoading2 = dynamic(
+  {
+    // 待加载组件
+    loader: () => import("../components/hello2")
+  }
+);
+
+
 export default () => (
   <div>
     <Header />
     <DynamicComponentWithCustomLoading />
+    {showMore && <DynamicComponentWithCustomLoading2 />}
     <p>HOME PAGE is here!</p>
   </div>
 );
@@ -507,6 +525,7 @@ const HelloBundle = dynamic({
 
     return components;
   },
+  // 导入Hello1,2组件
   render: (props, { Hello1, Hello2 }) => (
     <div>
       <h1>{props.title}</h1>
@@ -518,6 +537,5 @@ const HelloBundle = dynamic({
 
 export default () => <HelloBundle title="Dynamic Bundle" />;
 ```
-
 
 
