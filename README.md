@@ -666,6 +666,7 @@ export default class Error extends React.Component {
   }
 }
 ```
+```
 // 自定义内置错误页面
 import React from "react";
 import Error from "next/error";
@@ -691,4 +692,3 @@ export default class Page extends React.Component {
 
 ```
 
-```
