@@ -691,4 +691,21 @@ export default class Page extends React.Component {
 }
 
 ```
+## 自定义配置
+- 根目录下的next.config.js文件.是node.js模块
+- 应用于服务端渲染构建阶段.不作用于浏览器端.
+```
+// phase是配置文件被加载时的当前内容。所有的 phases 常量，constants 这些常量可以通过next/constants引入
+const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
+module.exports = (phase, { defaultConfig }) => {
+  if (phase === PHASE_DEVELOPMENT_SERVER) {
+    return {
+      /* development only config options here */
+    };
+  }
 
+  return {
+    /* config options for all phases except development here */
+  };
+};
+```
