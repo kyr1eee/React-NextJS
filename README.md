@@ -709,3 +709,19 @@ module.exports = (phase, { defaultConfig }) => {
   };
 };
 ```
+#### 自定义构建目录  
+代替.next成为构建目录
+```
+// next.config.js
+module.exports = {
+  distDir: "build"
+};
+```
+#### 禁止etag生成  
+每个页面默认生成etag
+```
+// next.config.js
+module.exports = {
+  generateEtags: false
+};
+```
