@@ -725,3 +725,33 @@ module.exports = {
   generateEtags: false
 };
 ```
+#### 控制服务器部署与缓存页面
+```
+// 开发环境使用
+module.exports = {
+  onDemandEntries: {
+    // period (in ms) where the server will keep pages in the buffer
+    maxInactiveAge: 25 * 1000,
+    // number of pages that should be kept simultaneously without being disposed
+    pagesBufferLength: 2
+  }
+};
+```
+#### 扩展解析后缀名
+```
+// next.config.js
+module.exports = {
+  pageExtensions: ["jsx", "js"]
+};
+```
+#### 配置构建ID  
+生成常量标志应用服务的版本,防止多台服务器部署出错
+```
+// next.config.js
+module.exports = {
+  generateBuildId: async () => {
+    // For example get the latest git commit hash here
+    return "my-build-id";
+  }
+};
+```
