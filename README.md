@@ -6,7 +6,31 @@ Next.js是一个流行的轻量级框架，用于使用React构建的静态和�
 - 支持基于Webpack的开发环境（HMR）
 - 能够使用Express或任何其他Node.js HTTP服务器实现
 - 可以使用您自己的Babel和Webpack配置进行定制
-## 路由
+<!-- vscode-markdown-toc -->
+* 1. [路由](#)
+* 2. [动态路由](#-1)
+* 3. [共享组件](#-1)
+* 4. [请求数据 getInitialProps](#getInitialProps)
+* 5. [styled-jsx 样式](#styled-jsx)
+* 6. [静态文件服务](#-1)
+* 7. [内置Head组件](#Head)
+* 8. [动态加载](#-1)
+* 9. [自定义app出口文件](#app)
+* 10. [自定义document](#document)
+* 11. [自定义错误处理](#-1)
+* 12. [自定义配置](#-1)
+		* 12.1. [自定义构建目录](#-1)
+		* 12.2. [禁止etag生成](#etag)
+		* 12.3. [控制服务器部署与缓存页面](#-1)
+		* 12.4. [扩展解析后缀名](#-1)
+		* 12.5. [配置构建ID](#ID)
+
+<!-- vscode-markdown-toc-config
+	numbering=true
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+##  1. <a name=''></a>路由
 - client-side navigation 路由导航,无须通过请求服务器来跳转
 - router实例只能在客户端使用,服务端渲染期间使用将报错
 - Link 为高阶组件
@@ -16,7 +40,7 @@ Next.js是一个流行的轻量级框架，用于使用React构建的静态和�
     <a title="About">About Page</a>
 </Link>
 ```
-## 动态路由
+##  2. <a name='-1'></a>动态路由
 - Link
 - Router
 - withRouter
@@ -273,7 +297,7 @@ else if(pathname === '/b)
 else
   handle(req, res, parsedUrl);
 ```
-## 共享组件
+##  3. <a name='-1'></a>共享组件
 1. props.children
 ```
 // MyLayout.js
@@ -327,7 +351,7 @@ const Index = () => (
     <Layout content={page} />
 )
 ```
-## 请求数据 getInitialProps
+##  4. <a name='getInitialProps'></a>请求数据 getInitialProps
 - 页面加载的过程中异步抓取数据
 - 返回值必须为纯对象
 - 只可在pages目录下文件使用,不能在components使用
@@ -387,7 +411,7 @@ Post.getInitialProps = async function(context) {
   return { show };
 };
 ```
-## styled-jsx 样式
+##  5. <a name='styled-jsx'></a>styled-jsx 样式
 - css in js, 每个 styled-jsx 组件都是单独的作用域, 不会影响其他组件, 同时对嵌套组件的元素也无效
 - styled-jsx 通过 babel插件运行,它将解析所有CSS并在构建过程中应用
 - 使用styled-jsx，所有必需的前缀和CSS验证都在babel插件中完成，因此没有额外的运行时开销
@@ -423,11 +447,11 @@ Post.getInitialProps = async function(context) {
   }
 `}</style>
 ```
-## 静态文件服务
+##  6. <a name='-1'></a>静态文件服务
 - static目录存储,通过/static/filename获取
 - public目录存储,通过根目录获取,即/filename(当前版本貌似已取消)
 
-## 内置Head组件
+##  7. <a name='Head'></a>内置Head组件
 - head元素不能位于div内,因此需要内置Head组件
 ```
 import Head from 'next/head';
@@ -443,7 +467,7 @@ const index = () => (
 )
 export default index;
 ```
-## 动态加载
+##  8. <a name='-1'></a>动态加载
 服务端动态导入
 1. ssr
 ```
@@ -537,7 +561,7 @@ const HelloBundle = dynamic({
 
 export default () => <HelloBundle title="Dynamic Bundle" />;
 ```
-## 自定义app出口文件
+##  9. <a name='app'></a>自定义app出口文件
 - pages/_app.js
 - 修改默认布局
 - 自定义错误抓取ComponentDidCatch
@@ -582,7 +606,7 @@ export default class MyApp extends App {
   }
 }
 ```
-## 自定义document
+##  10. <a name='document'></a>自定义document
 1. next自动定义文档标记,通过pages/_document.js修改
 2. 服务端呈现
 3. 初始服务端时添加标记元素
@@ -641,7 +665,7 @@ class MyDocument extends Document {
 export default MyDocument
 
 ```
-## 自定义错误处理
+##  11. <a name='-1'></a>自定义错误处理
 - pages/_error.js
 - 404,500通过默认的error.js处理
 - next/error组件渲染内置错误页面
@@ -691,7 +715,7 @@ export default class Page extends React.Component {
 }
 
 ```
-## 自定义配置
+##  12. <a name='-1'></a>自定义配置
 - 根目录下的next.config.js文件.是node.js模块
 - 应用于服务端渲染构建阶段.不作用于浏览器端.
 ```
@@ -709,7 +733,7 @@ module.exports = (phase, { defaultConfig }) => {
   };
 };
 ```
-#### 自定义构建目录  
+####  12.1. <a name='-1'></a>自定义构建目录  
 代替.next成为构建目录
 ```
 // next.config.js
@@ -717,7 +741,7 @@ module.exports = {
   distDir: "build"
 };
 ```
-#### 禁止etag生成  
+####  12.2. <a name='etag'></a>禁止etag生成  
 每个页面默认生成etag
 ```
 // next.config.js
@@ -725,7 +749,7 @@ module.exports = {
   generateEtags: false
 };
 ```
-#### 控制服务器部署与缓存页面
+####  12.3. <a name='-1'></a>控制服务器部署与缓存页面
 ```
 // 开发环境使用
 module.exports = {
@@ -737,14 +761,14 @@ module.exports = {
   }
 };
 ```
-#### 扩展解析后缀名
+####  12.4. <a name='-1'></a>扩展解析后缀名
 ```
 // next.config.js
 module.exports = {
   pageExtensions: ["jsx", "js"]
 };
 ```
-#### 配置构建ID  
+####  12.5. <a name='ID'></a>配置构建ID  
 生成常量标志应用服务的版本,防止多台服务器部署出错
 ```
 // next.config.js
