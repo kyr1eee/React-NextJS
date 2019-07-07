@@ -1,4 +1,4 @@
 module.exports = {
-    target: 'serverless',
-    useFileSystemPublicRoutes: false
+    //target: 'serverless',
+    //useFileSystemPublicRoutes: false
 };
