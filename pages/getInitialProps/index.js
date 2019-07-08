@@ -1,10 +1,4 @@
-<!-- vscode-markdown-toc -->
-
-<!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->// pathname - URL路径
+// pathname - URL路径
 // query - URL查询对象
 // asPath - 浏览器显示的实际路径(包括query参数)的字符串
 // req - HTTP request object (server only)

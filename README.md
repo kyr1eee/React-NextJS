@@ -24,6 +24,9 @@ Next.js是一个流行的轻量级框架，用于使用React构建的静态和�
 		* 12.3. [控制服务器部署与缓存页面](#-1)
 		* 12.4. [扩展解析后缀名](#-1)
 		* 12.5. [配置构建ID](#ID)
+		* 12.6. [跨平台设置NODE_ENV](#NODE_ENV)
+		* 12.7. [Analyzer Bundles](#AnalyzerBundles)
+* 13. [自定义字符集](#-1)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -778,4 +781,58 @@ module.exports = {
     return "my-build-id";
   }
 };
+```
+####  12.6. <a name='NODE_ENV'></a>跨平台设置NODE_ENV  
+cross-env能跨平台设置NODE_ENV, 跨平台设置环境变量
+```
+npm install -D cross-env
+```
+```
+// package.json
+// cross-env转换为windows平台命令
+scripts: {
+  "analyze": "cross-env BUNDLE_ANALYZE=both next build"
+}
+```
+####  12.7. <a name='AnalyzerBundles'></a>Analyzer Bundles  
+next项目使用webpack-bundle-analyzer, 可视化资源分析
+```
+// npm install @zeit/next-bundle-analyzer
+// next.config.js
+const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
+
+const nextConfig = {
+  analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
+  analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
+  bundleAnalyzerConfig: {
+    server: {
+      analyzerMode: 'static',
+      // 显示可视化报告的页面
+      reportFilename: '../bundles/server.html'
+    },
+    browser: {
+      // 配置参数与webpack-bundle-analyzer一样
+      analyzerMode: 'static',
+      reportFilename: '../bundles/client.html'
+    }
+  },
+  webpack(config) {
+    return config
+  }
+};
+
+module.exports = withBundleAnalyzer(nextConfig);
+```
+```
+// package.json
+scripts: {
+  "analyze" : "cross-env BUNDLE_ANALYZE=both next build",
+  "analyze:server" : "cross-env BUNDLE_ANALYZE=server next build",
+  "analyze:browser" : "cross-env BUNDLE_ANALYZE=browser next build"
+}
+```
+##  13. <a name='-1'></a>自定义字符集
+```
+// server.js
+res.setHeader('Content-Type', 'text/html; charset=iso-8859-2');
 ```

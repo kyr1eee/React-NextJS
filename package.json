@@ -7,16 +7,24 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "next",
     "build": "next build",
-    "start": "next start -p %PORT%"
+    "start": "next start",
+    "analyze": "cross-env BUNDLE_ANALYZE=both next build",
+    "analyze:server": "cross-env BUNDLE_ANALYZE=server npm_config_report=true next build",
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@zeit/next-bundle-analyzer": "^0.1.2",
     "express": "^4.17.1",
     "next": "^8.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-markdown": "^4.0.8"
+    "react-markdown": "^4.0.8",
+    "webpack-bundle-analyzer": "^3.3.2"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0"
   }
 }

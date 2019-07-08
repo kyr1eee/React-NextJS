@@ -1,0 +1,53 @@
+{
+  "modules": {
+    "byIdentifier": {
+      "multi private-next-pages/index.js": 0,
+      "multi private-next-pages/post.js": 1,
+      "multi private-next-pages/about.js": 2,
+      "multi private-next-pages/active-className/about.js": 3,
+      "multi private-next-pages/active-className/index.js": 4,
+      "multi private-next-pages/analyzer-bundles/about.js": 5,
+      "multi private-next-pages/analyzer-bundles/index.js": 6,
+      "multi private-next-pages/css/index.js": 7,
+      "multi private-next-pages/head/index.js": 8,
+      "multi private-next-pages/getInitialProps/index.js": 9,
+      "multi private-next-pages/static-file/index.js": 10,
+      "multi private-next-pages/router/index.js": 11,
+      "multi private-next-pages/router/other.js": 12,
+      "multi private-next-pages/router/prefetch.js": 13,
+      "multi private-next-pages/router/test.js": 14,
+      "multi private-next-pages/active-className/components/Link.js": 15,
+      "multi private-next-pages/active-className/components/Nav.js": 16,
+      "multi next/dist/pages/_app": 17,
+      "multi next/dist/pages/_error": 18,
+      "multi next/dist/pages/_document": 19
+    },
+    "usedIds": {
+      "0": 0,
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10,
+      "11": 11,
+      "12": 12,
+      "13": 13,
+      "14": 14,
+      "15": 15,
+      "16": 16,
+      "17": 17,
+      "18": 18,
+      "19": 19
+    }
+  },
+  "chunks": {
+    "byName": {},
+    "bySource": {},
+    "usedIds": []
+  }
+}
