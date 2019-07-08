@@ -5,7 +5,7 @@ const nextConfig = {
   analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
   bundleAnalyzerConfig: {
     server: {
-      analyzerMode: 'server',
+      analyzerMode: 'static',
       reportFilename: '../bundles/server.html'
     },
     browser: {

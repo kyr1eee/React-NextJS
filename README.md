@@ -9,12 +9,31 @@ Next.js是一个流行的轻量级框架，用于使用React构建的静态和�
 <!-- vscode-markdown-toc -->
 * 1. [路由](#)
 * 2. [动态路由](#-1)
+		* 2.1. [子路由跳转,Link 和 Router](#LinkRouter)
+		* 2.2. [ 获取路由参数,withRouter 和 getInitialProps](#withRoutergetInitialProps)
+		* 2.3. [ as属性改变URL显式方式](#asURL)
+		* 2.4. [ 子路由刷新问题](#-1)
+		* 2.5. [ replace属性](#replace)
+		* 2.6. [ Link组件href属性可用对象赋值](#Linkhref)
+		* 2.7. [ 拦截popstate事件, Router.beforePopState](#popstateRouter.beforePopState)
+		* 2.8. [ 路由事件, Router.events](#Router.events)
+		* 2.9. [ 浅路由 shallow routing](#shallowrouting)
+		* 2.10. [ 路由页面预加载, prefetch](#prefetch)
+		* 2.11. [ 禁止文件路径导航](#-1)
+		* 2.12. [ server.js自定义路由](#server.js)
 * 3. [共享组件](#-1)
+		* 3.1. [ props.children](#props.children)
+		* 3.2. [ 高阶组件](#-1)
+		* 3.3. [ props传递](#props)
 * 4. [请求数据 getInitialProps](#getInitialProps)
 * 5. [styled-jsx 样式](#styled-jsx)
 * 6. [静态文件服务](#-1)
 * 7. [内置Head组件](#Head)
 * 8. [动态加载](#-1)
+		* 8.1. [ ssr](#ssr)
+		* 8.2. [ 自定义加载组件](#-1)
+		* 8.3. [ 禁用SSR](#SSR)
+		* 8.4. [ 同时加载多个组件](#-1)
 * 9. [自定义app出口文件](#app)
 * 10. [自定义document](#document)
 * 11. [自定义错误处理](#-1)
@@ -47,7 +66,7 @@ Next.js是一个流行的轻量级框架，用于使用React构建的静态和�
 - Link
 - Router
 - withRouter
-1. 子路由跳转,Link 和 Router
+####  2.1. <a name='LinkRouter'></a>子路由跳转,Link 和 Router
 ```
 // index.js
 // 子路由跳转
@@ -71,7 +90,7 @@ import Router from 'next/router';
     query: { title: 'sleepyyyyyyyyyy' }
 })}>
 ```
-2. 获取路由参数,withRouter 和 getInitialProps  
+####  2.2. <a name='withRoutergetInitialProps'></a> 获取路由参数,withRouter 和 getInitialProps  
 withRouter 高阶组件  
 withRouter注入的router对象与来自'next/router'的Router相似
 ```
@@ -132,7 +151,7 @@ class Test extends React.Component {
 }
 export default Test;
 ```
-3. as属性改变URL显式方式
+####  2.3. <a name='asURL'></a> as属性改变URL显式方式
 ```
 const PostLink = props => (
   <li>
@@ -142,7 +161,7 @@ const PostLink = props => (
   </li>
 );
 ```
-4. 子路由刷新问题
+####  2.4. <a name='-1'></a> 子路由刷新问题
 如果Link标签使用了as属性,刷新的时候将出错,此时后端 node.js 解决
 ```
 // index.js
@@ -184,7 +203,7 @@ app
     process.exit(1);
   });
 ```
-5. replace属性  
+####  2.5. <a name='replace'></a> replace属性  
 replace作用是替换浏览器历史堆栈中栈顶的URL,Link组件默认行为是入栈
 ```
 const OtherLink = ({data}) => (
@@ -196,13 +215,13 @@ const OtherLink = ({data}) => (
   </div>
 );
 ```
-6. Link组件href属性可用对象赋值
+####  2.6. <a name='Linkhref'></a> Link组件href属性可用对象赋值
 ```
 <Link href={{ pathname: '/about', query: { name: 'Zeit' } }}>
   <a>here</a>
 </Link>
 ```
-7. 拦截popstate事件, Router.beforePopState  
+####  2.7. <a name='popstateRouter.beforePopState'></a> 拦截popstate事件, Router.beforePopState  
 popstate: 浏览器历史堆栈发生改变时触发的事件  
 beforePopState: 返回false将不处理popstate事件。返回true处理popstate事件
 ```
@@ -215,7 +234,7 @@ Router.beforePopState(({ url, as, options }) => {
     return true;
 });
 ```
-8. 路由事件, Router.events  
+####  2.8. <a name='Router.events'></a> 路由事件, Router.events  
 routeChangeStart(url) - Fires when a route starts to change  
 routeChangeComplete(url) - Fires when a route changed completely  
 routeChangeError(err, url) - Fires when there's an error when changing routes  
@@ -231,7 +250,7 @@ Router.events.on('routeChangeStart', handleRouteChange);
 // 取消监听
 Router.events.off('routeChangeStart', handleRouteChange);
 ```
-9. 浅路由 shallow routing  
+####  2.9. <a name='shallowrouting'></a> 浅路由 shallow routing  
 跳转路由时不触发getInitialProps, 通过withRouter获取路由对象  
 相同页面URL改变才能使用,当跳转到新的页面,原先页面会卸载然后新页面触发getInitialProps
 ```
@@ -257,7 +276,7 @@ const href = '/?counter=10';
 const as = '/about?counter=10';
 Router.push(href, as, { shallow: true });
 ```
-10. 路由页面预加载, prefetch  
+####  2.10. <a name='prefetch'></a> 路由页面预加载, prefetch  
 Link标签与router对象
 ```
 // 方法1
@@ -280,14 +299,14 @@ class Index extends React.Component {
 }
 export default withRouter(Index);
 ```
-11. 禁止文件路径导航
+####  2.11. <a name='-1'></a> 禁止文件路径导航
 ```
 // next.config.js
 module.export = {
   useFileSystemPublicRoutes: false
 };
 ```
-12. 自定义路由  
+####  2.12. <a name='server.js'></a> server.js自定义路由  
 访问a页面,跳转至b页面.访问b页面,跳转至a页面
 ```
 // server.js
@@ -301,7 +320,7 @@ else
   handle(req, res, parsedUrl);
 ```
 ##  3. <a name='-1'></a>共享组件
-1. props.children
+####  3.1. <a name='props.children'></a> props.children
 ```
 // MyLayout.js
 const Layout = props => (
@@ -319,7 +338,7 @@ const Index = () => (
     </Layout>
 )
 ```
-2. 高阶组件
+####  3.2. <a name='-1'></a> 高阶组件
 ```
 // MyLayout.js
 // 高阶组件返回值为 组件, 即函数组件或类组件
@@ -337,7 +356,7 @@ const Layout = page => {
 const Index  = () => <p>Hello Next</p> ;
 export default Layout(Index);
 ```
-3. props传递
+####  3.3. <a name='props'></a> props传递
 ```
 // MyLayout.js
 const Layout = props => (
@@ -472,7 +491,7 @@ export default index;
 ```
 ##  8. <a name='-1'></a>动态加载
 服务端动态导入
-1. ssr
+####  8.1. <a name='ssr'></a> ssr
 ```
 import dynamic from "next/dynamic";
 
@@ -486,7 +505,7 @@ export default () => (
   </div>
 );
 ```
-2. 自定义加载组件
+####  8.2. <a name='-1'></a> 自定义加载组件
 ```
 import dynamic from "next/dynamic";
 
@@ -523,7 +542,7 @@ export default () => (
   </div>
 );
 ```
-3. 禁用SSR
+####  8.3. <a name='SSR'></a> 禁用SSR
 ```
 import dynamic from "next/dynamic";
 
@@ -539,7 +558,7 @@ export default () => (
   </div>
 );
 ```
-4. 同时加载多个组件
+####  8.4. <a name='-1'></a> 同时加载多个组件
 ```
 import dynamic from "next/dynamic";
 
