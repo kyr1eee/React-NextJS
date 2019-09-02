@@ -1,3 +1,5 @@
+# SSR原理:  
+https://juejin.im/post/5bc7ea48e51d450e46289eab
 # React-NextJS
 Next.js是一个流行的轻量级框架，用于使用React构建的静态和服务器呈现的应用程序。它还提供样式和路由解决方案。
 - 默认情况下，服务器呈现
